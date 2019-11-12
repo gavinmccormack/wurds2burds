@@ -1,9 +1,25 @@
-      const mxCanvas = new  matrixCanvas();
-      var imageMatrix = mxCanvas.getMatrix();
-      var speedTimeMod = 1;
-      var startAnim = false;
-      var birdSize = 0.4;
+      
+      function birds_main() {
+        console.log(birds_main);
+        const mxCanvas = new  matrixCanvas();
+        var imageMatrix = mxCanvas.getMatrix();
+        var speedTimeMod = 1;
+        var startAnim = false;
+        var birdSize = 0.4;
+      }
 
+		window.addEventListener('load', function() {
+		document.querySelector('input[type="file"]').addEventListener('change', function() {
+			if (this.files && this.files[0]) {
+        console.log("File uploaded");
+				var img = document.querySelector('[data-image-target]');  // $('img')[0]
+				img.src = URL.createObjectURL(this.files[0]); // set src to blob url
+				img.onload = birds_main;
+			}
+		});
+		});
+
+	
 
       var Bird = function () {
 
