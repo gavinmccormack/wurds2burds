@@ -16,7 +16,7 @@ function birds_main() {
     imageMatrix = mxCanvas.getMatrix();
     speedTimeMod = 0.5;
     startAnim = false;
-    birdSize = 0.3;
+    birdSize = 0.4;
 
     var Bird = function() {
 
@@ -444,6 +444,7 @@ function birds_main() {
 
     function animate() {
 
+        
         requestAnimationFrame(animate);
         render();
         stats.end();
@@ -451,27 +452,38 @@ function birds_main() {
     }
 
     function render() {
-        for (var i = 0, il = birds.length; i < il; i++) {
 
-            boid = boids[i];
-            boid.run(boids);
+      
 
-            bird = birds[i];
-            bird.position.copy(boids[i].position);
+        function boidUpdate() {
+          for (var i = 0, il = birds.length; i < il; i++) {
 
-            var color = bird.material.color;
-            color.r = color.g = color.b = (500 - bird.position.z) / 1000;
+              boid = boids[i];
+              boid.run(boids);
 
-            bird.rotation.y = Math.atan2(-boid.velocity.z, boid.velocity.x);
-            bird.rotation.z = Math.asin(boid.velocity.y / boid.velocity.length());
+              bird = birds[i];
+              bird.position.copy(boids[i].position);
 
-            bird.phase = (bird.phase + (Math.max(0, bird.rotation.z) + 0.1)) % 62.83;
-            bird.geometry.vertices[5].y = bird.geometry.vertices[4].y = Math.sin(bird.phase) * 5;
+              var color = bird.material.color;
+              color.r = color.g = color.b = (500 - bird.position.z) / 1000;
 
+              bird.rotation.y = Math.atan2(-boid.velocity.z, boid.velocity.x);
+              bird.rotation.z = Math.asin(boid.velocity.y / boid.velocity.length());
+
+              bird.phase = (bird.phase + (Math.max(0, bird.rotation.z) + 0.1)) % 62.83;
+              bird.geometry.vertices[5].y = bird.geometry.vertices[4].y = Math.sin(bird.phase) * 5;
+
+          }
+        };
+
+        setTimeout(boidUpdate, 5);
+
+        function timedRender() {
+          renderer.render(scene, camera);
         }
 
-        renderer.render(scene, camera);
-
+        
+        setTimeout(timedRender, 5);
 
 
     }
